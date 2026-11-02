@@ -3,12 +3,14 @@
 Diagrams and explanations of how this FHIR server works inside. The diagrams are written in
 [Mermaid](https://mermaid.js.org/), which GitHub, Rider (Markdown preview) and VS Code render automatically.
 
-New to FHIR? Read the [project README](../README.md) first for the concepts, then come here for the internals.
-
 ## Reading order
+
+**New to FHIR or SMART?** Start with the two primers. They assume no healthcare background.
 
 | # | Doc | What you'll learn |
 |---|---|---|
+| 0a | [FHIR basics](00-fhir-basics.md) | Why FHIR exists, resources, data types, references, terminology (LOINC, SNOMED), the REST API, search, Bundles, profiles/IGs, versions, glossary |
+| 0b | [SMART on FHIR basics](00-smart-basics.md) | OAuth explained with an analogy, access tokens, scopes, the four launch types (with sequence diagrams), discovery, what the API must enforce, glossary |
 | 1 | [Architecture](01-architecture.md) | The big picture: layers, components, the ASP.NET Core pipeline, startup, dependency injection |
 | 2 | [Request flows](02-request-flows.md) | Sequence diagrams for create, read, update (with conflict), delete/history, search, errors, startup, and the SMART login |
 | 3 | [Class diagrams](03-class-diagrams.md) | Every class and how they relate, grouped by folder |
