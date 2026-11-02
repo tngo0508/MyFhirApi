@@ -9,7 +9,9 @@ and this README maps concepts to those files.
 - Search: string / token / date / reference parameters, AND/OR, modifiers, paging, `_include`
 - Security: SMART on FHIR scopes (v1 and v2 syntax) and patient compartments
 - Synthetic sample data in the Synthea format
-- 43 integration tests that run against SQL Server LocalDB
+- 45 tests that run against SQL Server LocalDB
+
+**Developer docs with diagrams** (architecture, sequence and class diagrams, data model, search, security, testing): [`docs/`](docs/README.md)
 
 ---
 
