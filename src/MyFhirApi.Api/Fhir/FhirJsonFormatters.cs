@@ -40,9 +40,22 @@ public sealed class FhirJsonInputFormatter : TextInputFormatter
             return await InputFormatterResult.FailureAsync();
         }
 
-        // TryDeserializeResource collects *all* problems (unknown elements, bad dates, wrong types...)
+        // TryDeserializeResource collects *all* FHIR problems (unknown elements, bad dates, wrong types...)
         // instead of stopping at the first one, which gives the client a useful OperationOutcome.
-        if (!Deserializer.TryDeserializeResource(json, out var resource, out var issues) || resource is null)
+        // It still throws when the text isn't JSON at all, so catch that case too.
+        Resource? resource;
+        IEnumerable<Hl7.Fhir.Utility.CodedException> issues;
+        try
+        {
+            Deserializer.TryDeserializeResource(json, out resource, out issues);
+        }
+        catch (System.Text.Json.JsonException ex)
+        {
+            context.ModelState.AddModelError(context.ModelName, $"Body is not valid JSON: {ex.Message}");
+            return await InputFormatterResult.FailureAsync();
+        }
+
+        if (resource is null || issues.Any())
         {
             foreach (var issue in issues)
                 context.ModelState.AddModelError(context.ModelName, issue.Message);
