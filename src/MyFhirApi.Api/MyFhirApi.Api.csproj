@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>bc3223eb-b217-4891-9def-aeca16c04b24</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Firely .NET SDK: FHIR R4 model classes (Patient, Observation, Bundle...), JSON (de)serializer, FHIRPath. -->
+    <PackageReference Include="Hl7.Fhir.R4" Version="6.8.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.14" />
+    <!-- Overrides a vulnerable transitive version pulled in by Microsoft.Data.SqlClient. -->
+    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.14" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- FHIR has a resource called "Task", which clashes with System.Threading.Tasks.Task.
+         This alias makes "Task" mean the .NET type everywhere; use Hl7.Fhir.Model.Task for the FHIR one. -->
+    <Using Include="System.Threading.Tasks.Task" Alias="Task" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Synthetic sample data loaded at startup (see Data/SampleDataLoader.cs). -->
+    <None Include="SampleData\**\*.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

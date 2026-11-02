@@ -1,0 +1,191 @@
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:5f2a7c1e-3b64-4c9a-9f4e-1a2b3c4d5e01",
+      "resource": {
+        "resourceType": "Patient",
+        "text": { "status": "generated", "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Synthetic patient: Maria Lopez</div>" },
+        "identifier": [
+          {
+            "type": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/v2-0203", "code": "MR", "display": "Medical Record Number" } ] },
+            "system": "http://example.org/fhir/mrn",
+            "value": "MRN-1001"
+          }
+        ],
+        "name": [ { "use": "official", "family": "Lopez", "given": [ "Maria", "Elena" ], "prefix": [ "Ms." ] } ],
+        "telecom": [ { "system": "phone", "value": "555-201-1001", "use": "home" } ],
+        "gender": "female",
+        "birthDate": "1984-03-12",
+        "address": [ { "line": [ "12 Synthetic Ave" ], "city": "Sacramento", "state": "CA", "postalCode": "95814", "country": "US" } ]
+      },
+      "request": { "method": "POST", "url": "Patient" }
+    },
+    {
+      "fullUrl": "urn:uuid:5f2a7c1e-3b64-4c9a-9f4e-1a2b3c4d5e02",
+      "resource": {
+        "resourceType": "Patient",
+        "text": { "status": "generated", "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Synthetic patient: James Nguyen</div>" },
+        "identifier": [
+          {
+            "type": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/v2-0203", "code": "MR", "display": "Medical Record Number" } ] },
+            "system": "http://example.org/fhir/mrn",
+            "value": "MRN-1002"
+          }
+        ],
+        "name": [ { "use": "official", "family": "Nguyen", "given": [ "James" ], "prefix": [ "Mr." ] } ],
+        "gender": "male",
+        "birthDate": "1957-11-02",
+        "address": [ { "line": [ "48 Example Rd" ], "city": "Fresno", "state": "CA", "postalCode": "93721", "country": "US" } ]
+      },
+      "request": { "method": "POST", "url": "Patient" }
+    },
+    {
+      "fullUrl": "urn:uuid:5f2a7c1e-3b64-4c9a-9f4e-1a2b3c4d5e03",
+      "resource": {
+        "resourceType": "Patient",
+        "text": { "status": "generated", "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Synthetic patient: Aisha Smith</div>" },
+        "identifier": [
+          {
+            "type": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/v2-0203", "code": "MR", "display": "Medical Record Number" } ] },
+            "system": "http://example.org/fhir/mrn",
+            "value": "MRN-1003"
+          }
+        ],
+        "name": [ { "use": "official", "family": "Smith", "given": [ "Aisha" ] } ],
+        "gender": "female",
+        "birthDate": "2012-07-30",
+        "address": [ { "line": [ "7 Prototype Ln" ], "city": "Oakland", "state": "CA", "postalCode": "94612", "country": "US" } ]
+      },
+      "request": { "method": "POST", "url": "Patient" }
+    },
+    {
+      "fullUrl": "urn:uuid:9a7e0d44-1c2b-4f0e-8d6a-0e1f2a3b4c01",
+      "resource": {
+        "resourceType": "Encounter",
+        "status": "finished",
+        "class": { "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode", "code": "AMB", "display": "ambulatory" },
+        "subject": { "reference": "urn:uuid:5f2a7c1e-3b64-4c9a-9f4e-1a2b3c4d5e01" },
+        "period": { "start": "2026-09-15T09:00:00Z", "end": "2026-09-15T09:30:00Z" }
+      },
+      "request": { "method": "POST", "url": "Encounter" }
+    },
+    {
+      "fullUrl": "urn:uuid:7c3d9e10-0000-4a00-9000-000000000101",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "vital-signs", "display": "Vital Signs" } ] } ],
+        "code": { "coding": [ { "system": "http://loinc.org", "code": "29463-7", "display": "Body weight" } ], "text": "Body weight" },
+        "subject": { "reference": "urn:uuid:5f2a7c1e-3b64-4c9a-9f4e-1a2b3c4d5e01" },
+        "encounter": { "reference": "urn:uuid:9a7e0d44-1c2b-4f0e-8d6a-0e1f2a3b4c01" },
+        "effectiveDateTime": "2026-09-15T09:05:00Z",
+        "valueQuantity": { "value": 68.2, "unit": "kg", "system": "http://unitsofmeasure.org", "code": "kg" }
+      },
+      "request": { "method": "POST", "url": "Observation" }
+    },
+    {
+      "fullUrl": "urn:uuid:7c3d9e10-0000-4a00-9000-000000000102",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "vital-signs", "display": "Vital Signs" } ] } ],
+        "code": { "coding": [ { "system": "http://loinc.org", "code": "8302-2", "display": "Body height" } ], "text": "Body height" },
+        "subject": { "reference": "urn:uuid:5f2a7c1e-3b64-4c9a-9f4e-1a2b3c4d5e01" },
+        "encounter": { "reference": "urn:uuid:9a7e0d44-1c2b-4f0e-8d6a-0e1f2a3b4c01" },
+        "effectiveDateTime": "2026-09-15T09:05:00Z",
+        "valueQuantity": { "value": 165.1, "unit": "cm", "system": "http://unitsofmeasure.org", "code": "cm" }
+      },
+      "request": { "method": "POST", "url": "Observation" }
+    },
+    {
+      "fullUrl": "urn:uuid:7c3d9e10-0000-4a00-9000-000000000103",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "vital-signs", "display": "Vital Signs" } ] } ],
+        "code": { "coding": [ { "system": "http://loinc.org", "code": "85354-9", "display": "Blood pressure panel with all children optional" } ], "text": "Blood pressure" },
+        "subject": { "reference": "urn:uuid:5f2a7c1e-3b64-4c9a-9f4e-1a2b3c4d5e01" },
+        "effectiveDateTime": "2026-09-15T09:06:00Z",
+        "component": [
+          {
+            "code": { "coding": [ { "system": "http://loinc.org", "code": "8480-6", "display": "Systolic blood pressure" } ] },
+            "valueQuantity": { "value": 118, "unit": "mm[Hg]", "system": "http://unitsofmeasure.org", "code": "mm[Hg]" }
+          },
+          {
+            "code": { "coding": [ { "system": "http://loinc.org", "code": "8462-4", "display": "Diastolic blood pressure" } ] },
+            "valueQuantity": { "value": 76, "unit": "mm[Hg]", "system": "http://unitsofmeasure.org", "code": "mm[Hg]" }
+          }
+        ]
+      },
+      "request": { "method": "POST", "url": "Observation" }
+    },
+    {
+      "fullUrl": "urn:uuid:7c3d9e10-0000-4a00-9000-000000000201",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "laboratory", "display": "Laboratory" } ] } ],
+        "code": { "coding": [ { "system": "http://loinc.org", "code": "4548-4", "display": "Hemoglobin A1c/Hemoglobin.total in Blood" } ], "text": "HbA1c" },
+        "subject": { "reference": "urn:uuid:5f2a7c1e-3b64-4c9a-9f4e-1a2b3c4d5e02" },
+        "effectiveDateTime": "2025-06-10T14:20:00Z",
+        "valueQuantity": { "value": 7.4, "unit": "%", "system": "http://unitsofmeasure.org", "code": "%" },
+        "interpretation": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation", "code": "H", "display": "High" } ] } ]
+      },
+      "request": { "method": "POST", "url": "Observation" }
+    },
+    {
+      "fullUrl": "urn:uuid:7c3d9e10-0000-4a00-9000-000000000202",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "laboratory", "display": "Laboratory" } ] } ],
+        "code": { "coding": [ { "system": "http://loinc.org", "code": "4548-4", "display": "Hemoglobin A1c/Hemoglobin.total in Blood" } ], "text": "HbA1c" },
+        "subject": { "reference": "urn:uuid:5f2a7c1e-3b64-4c9a-9f4e-1a2b3c4d5e02" },
+        "effectiveDateTime": "2026-08-22T10:05:00Z",
+        "valueQuantity": { "value": 6.6, "unit": "%", "system": "http://unitsofmeasure.org", "code": "%" }
+      },
+      "request": { "method": "POST", "url": "Observation" }
+    },
+    {
+      "fullUrl": "urn:uuid:7c3d9e10-0000-4a00-9000-000000000203",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "laboratory", "display": "Laboratory" } ] } ],
+        "code": { "coding": [ { "system": "http://loinc.org", "code": "2339-0", "display": "Glucose [Mass/volume] in Blood" } ], "text": "Glucose" },
+        "subject": { "reference": "urn:uuid:5f2a7c1e-3b64-4c9a-9f4e-1a2b3c4d5e02" },
+        "effectiveDateTime": "2026-08-22T10:05:00Z",
+        "valueQuantity": { "value": 132, "unit": "mg/dL", "system": "http://unitsofmeasure.org", "code": "mg/dL" }
+      },
+      "request": { "method": "POST", "url": "Observation" }
+    },
+    {
+      "fullUrl": "urn:uuid:7c3d9e10-0000-4a00-9000-000000000301",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "vital-signs", "display": "Vital Signs" } ] } ],
+        "code": { "coding": [ { "system": "http://loinc.org", "code": "8867-4", "display": "Heart rate" } ], "text": "Heart rate" },
+        "subject": { "reference": "urn:uuid:5f2a7c1e-3b64-4c9a-9f4e-1a2b3c4d5e03" },
+        "effectiveDateTime": "2026-10-03T16:45:00Z",
+        "valueQuantity": { "value": 92, "unit": "/min", "system": "http://unitsofmeasure.org", "code": "/min" }
+      },
+      "request": { "method": "POST", "url": "Observation" }
+    },
+    {
+      "fullUrl": "urn:uuid:7c3d9e10-0000-4a00-9000-000000000302",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "preliminary",
+        "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "vital-signs", "display": "Vital Signs" } ] } ],
+        "code": { "coding": [ { "system": "http://loinc.org", "code": "8310-5", "display": "Body temperature" } ], "text": "Body temperature" },
+        "subject": { "reference": "urn:uuid:5f2a7c1e-3b64-4c9a-9f4e-1a2b3c4d5e03" },
+        "effectiveDateTime": "2026-10-03T16:45:00Z",
+        "valueQuantity": { "value": 38.1, "unit": "Cel", "system": "http://unitsofmeasure.org", "code": "Cel" }
+      },
+      "request": { "method": "POST", "url": "Observation" }
+    }
+  ]
+}

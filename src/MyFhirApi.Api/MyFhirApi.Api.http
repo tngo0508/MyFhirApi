@@ -1,0 +1,116 @@
+### MyFhirApi sample requests
+### Run the API first:  dotnet run --project src/MyFhirApi.Api
+### In Rider/Visual Studio/VS Code, click the ▶ next to each request.
+### The ids below come from the bundled sample data (SampleData/synthetic-patients.json).
+
+@host = http://localhost:5025
+@maria = 5f2a7c1e-3b64-4c9a-9f4e-1a2b3c4d5e01
+@james = 5f2a7c1e-3b64-4c9a-9f4e-1a2b3c4d5e02
+# Only needed when Smart:Enabled=true (see README, "Trying SMART auth").
+@token = paste-a-token-here
+
+### 1. What can this server do? (CapabilityStatement)
+GET {{host}}/metadata?_pretty=true
+
+### 2. SMART discovery document
+GET {{host}}/.well-known/smart-configuration
+
+### 3. Read one patient
+GET {{host}}/Patient/{{maria}}?_pretty=true
+Authorization: Bearer {{token}}
+
+### 4. Search: string (case-insensitive prefix)
+GET {{host}}/Patient?family=ngu
+Authorization: Bearer {{token}}
+
+### 5. Search: token with system|code (find a patient by medical record number)
+GET {{host}}/Patient?identifier=http://example.org/fhir/mrn|MRN-1003
+Authorization: Bearer {{token}}
+
+### 6. Search: date with a prefix, plus AND across parameters
+GET {{host}}/Patient?birthdate=lt1990-01-01&gender=female
+Authorization: Bearer {{token}}
+
+### 7. Search: comma means OR
+GET {{host}}/Patient?name=maria,aisha
+Authorization: Bearer {{token}}
+
+### 8. Search: one patient's HbA1c lab results (LOINC 4548-4), with the Patient included in the Bundle
+GET {{host}}/Observation?patient={{james}}&code=http://loinc.org|4548-4&_include=Observation:subject&_pretty=true
+Authorization: Bearer {{token}}
+
+### 9. Search: vital signs since September 2026, two per page (follow the "next" link in the response)
+GET {{host}}/Observation?category=vital-signs&date=ge2026-09&_count=2
+Authorization: Bearer {{token}}
+
+### 10. Create a patient (the server assigns the id)
+POST {{host}}/Patient
+Content-Type: application/fhir+json
+Authorization: Bearer {{token}}
+
+{
+  "resourceType": "Patient",
+  "identifier": [ { "system": "http://example.org/fhir/mrn", "value": "MRN-2001" } ],
+  "name": [ { "family": "Okafor", "given": [ "Chidi" ] } ],
+  "gender": "male",
+  "birthDate": "1991-04-18"
+}
+
+> {% client.global.set("newId", response.body.id); %}
+
+### 11. Create an Observation for that patient (heart rate)
+POST {{host}}/Observation
+Content-Type: application/fhir+json
+Authorization: Bearer {{token}}
+
+{
+  "resourceType": "Observation",
+  "status": "final",
+  "category": [ { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "vital-signs" } ] } ],
+  "code": { "coding": [ { "system": "http://loinc.org", "code": "8867-4", "display": "Heart rate" } ] },
+  "subject": { "reference": "Patient/{{newId}}" },
+  "effectiveDateTime": "2026-11-01T09:30:00Z",
+  "valueQuantity": { "value": 64, "unit": "/min", "system": "http://unitsofmeasure.org", "code": "/min" }
+}
+
+### 12. Update with optimistic locking: succeeds only if version 1 is still current (run it twice: second time = 412)
+PUT {{host}}/Patient/{{newId}}
+Content-Type: application/fhir+json
+If-Match: W/"1"
+Authorization: Bearer {{token}}
+
+{
+  "resourceType": "Patient",
+  "id": "{{newId}}",
+  "identifier": [ { "system": "http://example.org/fhir/mrn", "value": "MRN-2001" } ],
+  "name": [ { "family": "Okafor", "given": [ "Chidi", "James" ] } ],
+  "gender": "male",
+  "birthDate": "1991-04-18"
+}
+
+### 13. History of that patient (all versions)
+GET {{host}}/Patient/{{newId}}/_history
+Authorization: Bearer {{token}}
+
+### 14. Read version 1 (vread)
+GET {{host}}/Patient/{{newId}}/_history/1
+Authorization: Bearer {{token}}
+
+### 15. Errors are OperationOutcome resources: invalid date
+POST {{host}}/Patient
+Content-Type: application/fhir+json
+Authorization: Bearer {{token}}
+
+{ "resourceType": "Patient", "birthDate": "yesterday" }
+
+### 16. Errors: Observation pointing to a patient that doesn't exist
+POST {{host}}/Observation
+Content-Type: application/fhir+json
+Authorization: Bearer {{token}}
+
+{
+  "resourceType": "Observation",
+  "status": "final",
+  "code": { "coding": [ { "system": "http://loinc.org", "code": "8867-4" } ] },
+  "subject": { "reference": "Patient/nobody" }
+}
