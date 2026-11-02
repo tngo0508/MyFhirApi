@@ -114,6 +114,17 @@ public sealed class CrudTests(FhirApiFactory factory) : IClassFixture<FhirApiFac
     }
 
     [Fact]
+    public async Task Malformed_json_returns_400_not_500()
+    {
+        var body = new StringContent("{resourceType:Patient}", System.Text.Encoding.UTF8, "application/fhir+json");
+
+        var response = await _client.PostAsync("Patient", body);
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.Contains("not valid JSON", (await response.ReadAsAsync<OperationOutcome>()).Issue[0].Diagnostics);
+    }
+
+    [Fact]
     public async Task Body_type_must_match_url_type()
     {
         var response = await _client.PostAsync("Observation", Content(NewPatient("Mismatch")));

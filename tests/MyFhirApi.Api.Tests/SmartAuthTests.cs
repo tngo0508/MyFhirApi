@@ -43,12 +43,12 @@ public sealed class SmartAuthTests(SecuredFhirApiFactory factory) : IClassFixtur
     }
 
     [Theory]
-    [InlineData(null, HttpStatusCode.Unauthorized)]
-    [InlineData("user/Patient.read", HttpStatusCode.Forbidden)]
-    public async Task Permissions_are_checked_before_the_body_is_validated(string? scopes, HttpStatusCode expected)
+    [InlineData(null, HttpStatusCode.Unauthorized, """{"resourceType":"Patient","birthDate":"yesterday"}""")]
+    [InlineData("user/Patient.read", HttpStatusCode.Forbidden, """{"resourceType":"Patient","birthDate":"yesterday"}""")]
+    [InlineData("user/Patient.read", HttpStatusCode.Forbidden, "{not json")]
+    public async Task Permissions_are_checked_before_the_body_is_validated(string? scopes, HttpStatusCode expected, string body)
     {
-        var invalidBody = new StringContent("""{"resourceType":"Patient","birthDate":"yesterday"}""",
-            System.Text.Encoding.UTF8, "application/fhir+json");
+        var invalidBody = new StringContent(body, System.Text.Encoding.UTF8, "application/fhir+json");
 
         var response = await Client(scopes).PostAsync("Patient", invalidBody);
 
